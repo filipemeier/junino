@@ -31,24 +31,24 @@
       object-fit: contain;
     }
 
-    #botao-girar {
-      position: fixed;
-      bottom: 8vh;
-      left: 50%;
-      transform: translateX(-50%);
-      width: min(30vw, 225px);  /* aumentado 50% */
-      height: min(30vw, 225px); /* aumentado 50% */
-      border-radius: 50%;
-      background-color: #4CAF50;
-      border: none;
-      color: white;
-      font-size: 1.5em;
-      font-weight: bold;
-      box-shadow: 0 8px #2e7d32;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      z-index: 10;
-    }
+#botao-girar {
+  position: fixed;
+  bottom: 8vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30vw;   /* totalmente responsivo */
+  height: 30vw;  /* mantém formato redondo */
+  border-radius: 50%;
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  font-size: 1.5em;
+  font-weight: bold;
+  box-shadow: 0 8px #2e7d32;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
 
     #botao-girar:active {
       transform: translate(-50%, 4px);
