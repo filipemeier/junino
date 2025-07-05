@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>JOGO DO TIGRIM</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      background-color: #1A2B5C;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      transition: background-color 0.1s;
+    }
+
+    #container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #tigrinho {
+      max-width: 90%;
+      max-height: 70%;
+      object-fit: contain;
+    }
+
+    #botao-girar {
+      position: fixed;
+      bottom: 8vh; /* distância da parte inferior */
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(20vw, 150px);  /* responsivo: 20% da largura da tela, até 150px */
+      height: min(20vw, 150px); /* altura igual à largura, mantendo o formato redondo */
+      border-radius: 50%;
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      font-size: 1.5em;
+      font-weight: bold;
+      box-shadow: 0 8px #2e7d32;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+
+    #botao-girar:active {
+      transform: translate(-50%, 4px);
+      box-shadow: 0 4px #1b5e20;
+    }
+
+    .coin {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      background-image: url('coin.png');
+      background-size: cover;
+      pointer-events: none;
+      animation: fall 6s linear forwards;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      0% { top: -100px; opacity: 1; }
+      100% { top: 100vh; opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="container">
+    <img id="tigrinho" src="tigrinho-maves.png" alt="Tigrinho Caipira">
+  </div>
+
+  <button id="botao-girar" onclick="girar()">GIRAR</button>
+
+  <audio id="slotSound" src="slot-machine.mp3" preload="auto"></audio>
+
+  <script>
+    function girar() {
+      const botao = document.getElementById("botao-girar");
+      const audio = document.getElementById("slotSound");
+
+      // Animação e bloqueio temporário
+      botao.disabled = true;
+      botao.style.backgroundColor = "#D32F2F";
+      botao.style.boxShadow = "0 8px #880000";
+      setTimeout(() => {
+        botao.style.backgroundColor = "#4CAF50";
+        botao.style.boxShadow = "0 8px #2e7d32";
+        botao.disabled = false;
+      }, 6000);
+
+      // Som
+      audio.currentTime = 0;
+      audio.play();
+
+      // Piscar a tela
+      let count = 0;
+      const flashes = 60;
+      const flashInterval = setInterval(() => {
+        document.body.style.backgroundColor = getRandomColor();
+        count++;
+        if (count >= flashes) {
+          clearInterval(flashInterval);
+          document.body.style.backgroundColor = "#1A2B5C";
+        }
+      }, 100);
+
+      // Chuva de moedas
+      const duration = 6000;
+      const coinInterval = 100;
+      const endTime = Date.now() + duration;
+
+      const createCoin = () => {
+        const coin = document.createElement("div");
+        coin.className = "coin";
+        coin.style.left = Math.random() * window.innerWidth + "px";
+        document.body.appendChild(coin);
+        setTimeout(() => coin.remove(), 6000);
+      };
+
+      const rain = setInterval(() => {
+        if (Date.now() > endTime) {
+          clearInterval(rain);
+        } else {
+          createCoin();
+        }
+      }, coinInterval);
+    }
+
+    function getRandomColor() {
+      const letters = "0123456789ABCDEF";
+      let color = "#";
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+  </script>
+
+</body>
+</html>
