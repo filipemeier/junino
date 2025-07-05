@@ -33,11 +33,11 @@
 
     #botao-girar {
       position: fixed;
-      bottom: 8vh; /* distância da parte inferior */
+      bottom: 8vh;
       left: 50%;
       transform: translateX(-50%);
-      width: min(20vw, 150px);  /* responsivo: 20% da largura da tela, até 150px */
-      height: min(20vw, 150px); /* altura igual à largura, mantendo o formato redondo */
+      width: min(30vw, 225px);  /* aumentado 50% */
+      height: min(30vw, 225px); /* aumentado 50% */
       border-radius: 50%;
       background-color: #4CAF50;
       border: none;
@@ -87,7 +87,6 @@
       const botao = document.getElementById("botao-girar");
       const audio = document.getElementById("slotSound");
 
-      // Animação e bloqueio temporário
       botao.disabled = true;
       botao.style.backgroundColor = "#D32F2F";
       botao.style.boxShadow = "0 8px #880000";
@@ -97,11 +96,9 @@
         botao.disabled = false;
       }, 6000);
 
-      // Som
       audio.currentTime = 0;
       audio.play();
 
-      // Piscar a tela
       let count = 0;
       const flashes = 60;
       const flashInterval = setInterval(() => {
@@ -113,7 +110,6 @@
         }
       }, 100);
 
-      // Chuva de moedas
       const duration = 6000;
       const coinInterval = 100;
       const endTime = Date.now() + duration;
